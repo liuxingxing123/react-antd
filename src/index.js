@@ -1,12 +1,42 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import "./index.less"
+import React from "react"
+import { render } from "react-dom"
+import store from "./store"
+import {Provider} from "react-redux"
+import App from "./App"
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom"
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { mainRouter } from "./routes"
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import zhCN from "antd/es/locale/zh_CN"
+import {ConfigProvider} from "antd"
+render(
+  <Provider store={store}>
+  <ConfigProvider locale={zhCN}>
+    <Router>
+      <Switch>
+        <Route
+          path="/admin"
+          component={App}
+        />
+        {mainRouter.map(route => {
+          return (
+            <Route
+              path={route.pathname}
+              component={route.component}
+              key={route.pathname}
+            />
+          );
+        })}
+        <Redirect to="/admin" from="/" exact />
+        <Redirect to="/404" />
+      </Switch>
+    </Router>
+  </ConfigProvider></Provider>,
+  document.querySelector("#root")
+);

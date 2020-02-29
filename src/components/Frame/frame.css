@@ -1,0 +1,11 @@
+.qf-header {
+  padding: 0 16px;
+  display: flex;
+}
+.qf-header .qf-logo {
+  height: 64px;
+  flex: 1;
+}
+.qf-header .qf-logo img {
+  max-height: 100%;
+}
